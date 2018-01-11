@@ -1,0 +1,6 @@
+let (mcut, _) = pF "mcut" (Just 10000)
+    (mres, _) = pF "mres" (Just 1)
+    (sawamp, _) = pF "sawamp" (Just 1)
+    (sqamp, _) = pF "sawamp" (Just 1)
+    (sinamp, _) = pF "sinamp" (Just 1)
+    (detvol, _) = Pf "detvol" (Just 1)

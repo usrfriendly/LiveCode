@@ -1,0 +1,1 @@
+E:\Apps\emacs-25.1-2-x86_64-w64-mingw32\bin\runemacs.exe --file .\default.tidal

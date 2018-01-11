@@ -1,0 +1,1 @@
+E:\Apps\emacs-25.1-2-x86_64-w64-mingw32\bin\runemacs.exe --file .\\%DATE:~4,2%-%DATE:~7,2%-%DATE:~12,2%_%TIME:~0,5%.tidal
