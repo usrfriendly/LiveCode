@@ -1,4 +1,4 @@
-#N canvas 160 111 1278 752 10;
+#N canvas -8 -8 1600 827 10;
 #X declare -path patch_editor_abs;
 #X obj 6 708 declare -path patch_editor_abs;
 #N canvas 447 50 707 551 patch-editor-do-not-delete 0;
@@ -566,7 +566,7 @@
 #X msg 177 62 0;
 #X msg 83 341 \; pd-main.pd obj 200 200 \$1 \$2;
 #X obj 162 280 nbx 5 14 -1e+037 1e+037 0 1 empty empty empty 0 -8 0
-10 -262144 -1 -1 0 256;
+10 -262144 -1 -1 1 256;
 #X obj 64 387 t b b;
 #X msg 64 509 loadbang;
 #X obj 91 418 s SAVE-S;
@@ -2464,7 +2464,7 @@
 #X msg 177 81 0;
 #X msg 83 341 \; pd-main.pd obj 200 200 \$1 \$2;
 #X obj 162 280 nbx 5 14 -1e+037 1e+037 0 1 empty empty empty 0 -8 0
-10 -262144 -1 -1 0 256;
+10 -262144 -1 -1 1 256;
 #X obj 64 387 t b b;
 #X msg 64 509 loadbang;
 #X obj 91 411 s SAVE-S;
@@ -3979,7 +3979,7 @@
 #X msg 177 81 0;
 #X msg 83 341 \; pd-main.pd obj 200 200 \$1 \$2;
 #X obj 162 280 nbx 5 14 -1e+037 1e+037 0 1 empty empty empty 0 -8 0
-10 -262144 -1 -1 0 256;
+10 -262144 -1 -1 1 256;
 #X obj 64 387 t b b;
 #X msg 64 509 loadbang;
 #X obj 91 411 s SAVE-S;
@@ -5452,3 +5452,16 @@ for more details.;
 -262144 -1 -1;
 #X obj 10 89 bng 15 250 50 0 SAVE-S SAVE-R <--SAVE!(enter) 17 7 0 10
 -262144 -4034 -1;
+#X obj 1311 624 maestro4;
+#X obj 147 13 bpmclock;
+#X obj 149 181 clock-multiply;
+#X obj 375 21 mega-sequencer 1;
+#X obj 493 292 polysynth 1;
+#X obj 1149 425 mixer4 1;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 11 0 13 0;
+#X connect 12 0 13 1;
+#X connect 13 0 14 0;
+#X connect 13 1 14 0;
+#X connect 14 0 9 0;

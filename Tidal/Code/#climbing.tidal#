@@ -1,0 +1,17 @@
+let (mcut, _) = pF "mcut" (Just 10000)
+    (mres, _) = pF "mres" (Just 1)
+    (sawvol, _) = pF "sawvol" (Just 1)
+    (puvol, _) = pF "puvol" (Just 1)
+    (pwidth, _) = pF "pwidth" (Just 1)
+    (sinvol, _) = pF "sinvol" (Just 1)
+    (detvol, _) = pF "detvol" (Just 1)
+
+-- cps 120/120 because for anything/120, anything=bpm
+cps (60/120)
+
+let pat = "0 0 1 0 0 1 0 1"
+
+do
+  d1 $ juxBy 0.9 (fast 2 . (|-| n "<24 36>") . (|=| release 0.1) . (# gain 1.2) . (# crush 2)) $ s "dirtlogasr*12" # n "0..12" # gain 1 # sustain 2 # release 0.25 |+| n "<0 12 24 36>" |*| n "<0 2 4>"|/| n "4"
+  d2 $ fast 4 $ every 2 (|=| s "909bd*2") $ s "909bd" # gain 2 # decay 0.2
+  d3 $ fast 4 $ gain pat # s "909hc*8"
