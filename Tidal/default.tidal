@@ -1,3 +1,4 @@
+
 let (mcut, _) = pF "mcut" (Just 10000)
     (mres, _) = pF "mres" (Just 1)
     (sawvol, _) = pF "sawvol" (Just 1)
@@ -6,12 +7,7 @@ let (mcut, _) = pF "mcut" (Just 10000)
     (sinvol, _) = pF "sinvol" (Just 1)
     (detvol, _) = pF "detvol" (Just 1)
     (mratio, _) = pF "mratio" (Just 1)
+    (noisevol, _) = pF "noisevol" (Just 1)
     
 -- cps 120/120 because for anything/120, anything=bpm
 cps (120/120)
-
-d1 $ stut' 4 (1/9) (|*| gain (6/8)) $ n "0 12 -12 0 7 12" # s "dirtlog" # sinvol 0 # pwidth (scale 0.1 0.5 $ slow 32 $ sine) # sawvol 0 # puvol 1 # decay (scale 0.5 1 $ slow 14 $ sine) |-| n 24
-
-d1 $ silence
-
-d2 $ n "0 12 -12 -12 0 12" # s "dirtfm" # mratio (scale 2 8 $ slow 8 $ sine) # room 0.2 # size 0.8

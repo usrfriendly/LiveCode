@@ -11,7 +11,7 @@ server.waitForBoot {
 	~dirt.loadSoundFiles("/Users/bgold/tidal/samples/*"); //load samples (path can be passed) mono is assumed.
 			//~dirt.loadSoundFiles("/Users/bgold/tidal/test/samples/*");	// load samples (path can be passed) mono is assumed.
 	server.sync; // wait for samples to be read
-	~dirt.start(57120, 0 ! 4);   // start listening on port 57120, create two busses each sending audio to channel 0
+	~dirt.start(57120, 0 2 4);   // start listening on port 57120, create two busses each sending audio to channel 0
 };
 server.latency = 0.3; // increase this if you get "late" messages
 // don't know why this doesn't work

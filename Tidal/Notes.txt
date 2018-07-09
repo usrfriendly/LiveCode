@@ -1,0 +1,1 @@
+For my setup, I use the BatLib StageLimiter added to dirt_monitor in core-synths.scd to allow multiple orbits, and no clipping.
