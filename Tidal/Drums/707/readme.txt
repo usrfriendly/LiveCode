@@ -1,1 +1,0 @@
-Thank you for downloading this file from The Mod Archive. Please visit http://www.modarchive.com for the ultimate resource in mods and samples!
