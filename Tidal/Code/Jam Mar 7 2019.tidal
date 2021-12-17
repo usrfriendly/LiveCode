@@ -1,0 +1,28 @@
+let mcut = pF "mcut"
+    mres = pF "mres"
+    sawvol = pF "sawvol"
+    puvol = pF "puvol"
+    pwidth = pF "pwidth"
+    sinvol = pF "sinvol"
+    detvol = pF "detvol"
+    mratio = pF "mratio"
+    noisevol = pF "noisevol"
+    
+-- cps 120/120 because for anything/120, anything=bpm
+cps (120/60*4)
+
+do
+  let inverse 1=0
+      inverse 0=1
+      pat1 = "1 0 1 1 1 0 1 0"
+      smel1 = scale "minor" "{0 3 5 [7 2]}%8"
+      g = gain 0
+  setcps (120/60/4)
+  d1 $ stack [
+    stut' 4 (1/16) (|*| gain 0.8) $ s "909bd*4" # shape 0.8 # release 0.7 |*| gain 1.2 # g,
+    s "[909hc 909ho]*4" |*| gain 0.9 # g,
+    s "909s:3(2,8)" # g
+    ] # orbit 0 # room 0.1 # size 0.1
+  d2 $ palindrome $ n smel1 # s "dirtlog" # orbit 1 # room 0.2 # size 0.9 # g
+  d3 $ n smel1 # s "dirtlog" # sawvol 0 # puvol 0 # shape 0.8 |-| n 12 # mres 1.2 |+| n "<0 7 12>" # cutoff 2000 # orbit 2 # g
+  d4 $ juxBy 0 ((0.065 <~) . (|-| n 12)) $ n smel1 # s "dirt101" |-| n 12 # detune "[0,4]" # sawvol "[0,1]" |+| scale "minor" "<0 4 8 4>" # pwidth (range 0.1 0.5 $ slow 32 $ sine) # mcut 4000 # mres 1.2 # shape 0.4 # g

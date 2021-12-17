@@ -1,5 +1,0 @@
-d1 $ s "909bd:3*2" # gain 2
-
-d2 $ every 16 (fast 2) $ fast 2 $ s "supersnare(3,2)"
-
-d3 $ jux (slow 2) $ juxby (|-| n -12) $ every 16 (fast 4) $ n "[0,3,7,9](3,2)" # s "sawDetune" # cutoff 400 # decay 0.4 # orbit 1 # room 0.8

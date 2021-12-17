@@ -1,0 +1,19 @@
+
+
+d1 $ every 4 (slow 2) $ jux (|-| n "<12 24>") $ palindrome $ s "dirt101*4" # n "[0,3,7] [0,7,12]" # orbit 0 # size 0.3 # decay "1(7,4)" # room (scale 0.2 1 tri) # cutoff (scale 250 1000 sine)
+
+d2 $ s "dirt101*8" # n (choose[0,3,7]) # decay 0.4 # orbit 0 # cutoff (slow 8 $ scale 200 2000 sine) # crush (slow 32 $ scale 16 8 sine) # detune 4
+
+d2 $ silence
+
+d1 $ silence
+
+d3 $ stack [
+  s "808bd*2" # gain 1 # orbit 1,
+  s "808:1*4" # gain 1,
+  every 3 (slow 1.5) $ s "808:2(7,4)",
+  every 4 (stut' 42 0.05125 (|*| gain 0.9)) $ gain "~ 1 ~ 1" # s "808:4"
+  ]
+
+  hush
+  

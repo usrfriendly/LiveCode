@@ -1,0 +1,29 @@
+
+let (mcut, _) = pF "mcut" (Just 10000)
+    (mres, _) = pF "mres" (Just 1)
+    (sawvol, _) = pF "sawvol" (Just 1)
+    (puvol, _) = pF "puvol" (Just 1)
+    (pwidth, _) = pF "pwidth" (Just 1)
+    (sinvol, _) = pF "sinvol" (Just 1)
+    (detvol, _) = pF "detvol" (Just 1)
+    (mratio, _) = pF "mratio" (Just 1)
+    (noisevol, _) = pF "noisevol" (Just 1)
+    
+-- cps 120/120 because for anything/120, anything=bpm
+cps (140/60/4)
+
+
+d1 $ fast 4 $ s "909bd" # orbit 0 # room 0.4 # size 0.2 # gain 1.2 # crush 4
+
+
+d2 $ stack [
+  s "909hc*8",
+  fast 2 $ s "~ 909s:8" # release 0.4
+  ] # orbit 0 # room 0.4 # size 0.2 # gain 0.8
+
+let melody = "0 3 7 0 12 15 19 15"
+
+d3 $ palindrome $ stack [
+   juxBy 0.125 ((fast 2) . (|*| gain 1)) $ n melody # s "dirt101" # mcut (scale 1000 8000 $ slow 128 $ sine) # mres 3 |+| n "[0,7,12]" |+| n "<0 5 12 17 19>" # gain 0.9 # release 2,
+  n melody # s "dirt101" |-| n 24 # mcut (scale 1000 8000 $ slow 128 $ sine)
+  ] # orbit 1 # crush 6 # room 0.2 # size 0.9

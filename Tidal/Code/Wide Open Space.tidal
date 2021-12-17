@@ -1,0 +1,27 @@
+let mcut = pF "mcut"
+    mres = pF "mres"
+    sawvol = pF "sawvol"
+    puvol = pF "puvol"
+    pwidth = pF "pwidth"
+    sinvol = pF "sinvol"
+    detvol = pF "detvol"
+    mratio = pF "mratio"
+    noisevol = pF "noisevol"
+    
+-- cps 120/120 because for anything/120, anything=bpm
+cps (120/60*4)
+
+
+do
+    let inverse 1 = 0
+        inverse 0 = 1
+        kickpat = "0 1 1 0 1 0 1 1"
+        mel = scale "minor" "<0 7 5 3 5 2 5>"
+    setcps (33/60/4)
+    d1 $ juxBy 0 ((# pan (range 1 0 $ slow 8 $ sine))) $ mel # s "dirtlog" 
+        # sus 32 # rel 32 
+        # real (range 0 100 $ slow 2 $ sine) # imag (range 0 0.001 $ slow 8 $ sine)
+        # puvol (range 0 0.25 $ slow 16 $ cosine) # sawvol (range 0 0.25 $ slow 16 $ tri) 
+        # mcut (range 100 4000 $ slow 128 $ sine) # mres (range 1 3 $ slow 96 $ tri) 
+        # distort 0 # pan (range 0 1 $ slow 8 $ sine) # gain 0.75
+        # room 0.8 # size 0.2

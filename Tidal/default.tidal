@@ -11,6 +11,31 @@ let mcut = pF "mcut"
 -- cps 120/120 because for anything/120, anything=bpm
 cps (120/60*4)
 
+just2semi j = 12 * (log j) / (log 2)
+newscales = [
+      ("justionian",     map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 15/8]),
+      ("justdorian",     map just2semi [1,   9/8,   6/5,   4/3,   3/2,   5/3, 16/9]),
+      ("justphrygian",   map just2semi [1, 16/15,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlydian",     map just2semi [1,   9/8,   5/4, 45/32,   3/2,   5/3, 15/8]),
+      ("justmixolydian", map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 16/9]),
+      ("justaeolian",    map just2semi [1,   9/8,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlocrian",    map just2semi [1, 16/15,   6/5,   4/3,   45/32, 8/5, 16/9]),
+      ("edo5",          map just2semi [1, 8/7, 21/16, 3/2, 12/7]),
+      ("edo6",           map just2semi [1,   8/7,   5/4,    7/5,  8/5,   9/5]),
+      ("edo11",          map just2semi [1, 15/14, 8/7, 6/5, 9/7, 11/8, 16/11, 14/9, 5/3, 7/4, 15/8])
+    ]
+scale = getScale (scaleTable ++ newscales)
+
 do
-  let inverse 1=0
-      inverse 0=1
+    let inverse 1 = 0
+        inverse 0 = 1
+        kickpat = "0 1 1 0 1 0 1 1"
+        mel = scale "edo6" "{0 1 2 3 4 5}%4"
+        chrd = scale "edo6" "{[0,3,5] [0,2,5] [0,4,5] [0,6]}%1"
+    setcps (80/60)
+    d1 $ s "dirtlog" <| n chrd # rel 2
+    d2 $ s "dirtfm" <| n mel
+
+hush 
+
+

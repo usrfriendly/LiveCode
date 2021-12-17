@@ -1,0 +1,52 @@
+let mcut = pF "mcut"
+    mres = pF "mres"
+    sawvol = pF "sawvol"
+    puvol = pF "puvol"
+    pwidth = pF "pwidth"
+    sinvol = pF "sinvol"
+    detvol = pF "detvol"
+    mratio = pF "mratio"
+    noisevol = pF "noisevol"
+    
+-- cps 120/120 because for anything/120, anything=bpm
+cps (120/60*4)
+
+just2semi j = 12 * (log j) / (log 2)
+newscales = [
+      ("justionian",     map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 15/8]),
+      ("justdorian",     map just2semi [1,   9/8,   6/5,   4/3,   3/2,   5/3, 16/9]),
+      ("justphrygian",   map just2semi [1, 16/15,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlydian",     map just2semi [1,   9/8,   5/4, 45/32,   3/2,   5/3, 15/8]),
+      ("justmixolydian", map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 16/9]),
+      ("justaeolian",    map just2semi [1,   9/8,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlocrian",    map just2semi [1, 16/15,   6/5,   4/3,   45/32, 8/5, 16/9]),
+      ("edo5",          map just2semi [1, 8/7, 21/16, 3/2, 12/7]),
+      ("edo6",           map just2semi [1,   8/7,   5/4,    7/5,  8/5,   9/5]),
+      ("edo11",          map just2semi [1, 15/14, 8/7, 6/5, 9/7, 11/8, 16/11, 14/9, 5/3, 7/4, 15/8])
+    ]
+scale = getScale (scaleTable ++ newscales)
+
+do
+    let inverse 1 = 0
+        inverse 0 = 1
+        kickpat = "0 1 1 0 1 0 1 1"
+        mel = scale "edo6" "{0 1 2 3 4 5 6 7 8 9 10 11}%2"
+        bass = scale "edo6" "{0 0 7 7 5 7}%2"
+        mel2 = scale "edo6" "{0 12 0 6 4 3 2}%1"
+    setcps (80/60)
+    d1 $ rarely (# real 2) $ fast 2 $ stack [ 
+        palindrome $ s "dirt101" <| n mel,
+        s "dirt101" <| n mel # mcut (range 3000 6000 $ slow 8 $ sine),
+        s "dirt101" <| n mel2 # mcut (range 3000 6000 $ slow 8 $ sine),
+        s "dirtlog" <| n bass |- n "24" # mcut 5000 # detune (range 0 1 $ slow 32 $ tri)
+        ] # sus 2 
+    d2 $ stack [
+        brak $ s "909bd:2" # shape 0.9,
+        s "808fx:1(5,8)",
+        s "{~ 909s:4}%1" # size 0.9 # gain 2
+        ]
+    
+
+hush 
+
+

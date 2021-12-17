@@ -1,0 +1,24 @@
+let mcut = pF "mcut"
+    mres = pF "mres"
+    sawvol = pF "sawvol"
+    puvol = pF "puvol"
+    pwidth = pF "pwidth"
+    sinvol = pF "sinvol"
+    detvol = pF "detvol"
+    mratio = pF "mratio"
+    noisevol = pF "noisevol"
+    
+-- cps 120/120 because for anything/120, anything=bpm
+cps (160/60*4)
+
+
+do
+    let inverse 1 = 0
+        inverse 0 = 1
+        scratch 0 = -1
+        kickpat = "0 1 1 0 1 0 1 1"
+        mel = "0 0 0 5 0 0 0 6 0 0 8 0 0 5 4"
+        pat1 = "3 4 5 3 4 5 2 3 0 1 2 0 1 2 3 4"
+        pat2 = "5 6 7 5 6 7 3 4"
+    setcps (130/60/4)
+
