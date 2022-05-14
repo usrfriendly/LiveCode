@@ -29,19 +29,16 @@ scale = getScale (scaleTable ++ newscales)
 do
     let inverse 1 = 0
         inverse 0 = 1
-        mel = scale "edo11" "{12 4 2 8 9 10 5 1 2}%16.1"
-    setcps (120/60/4)
-    d1 $ fast 2 $ note "{0 1 2 4 3 4}" |> s "moog" # n 1 # cut 1 # vowel "{o u i e}%2"
-        # room 0.2 # size 0.1
-    d3 $ s "[~ 909ho]*4" # hpf 10000 # room 0.2
+        mel = scale "edo5" "{0 3 5 3 5 0 4 1}%2"
+    setcps (160/60/4)
+    p "303ld" $ juxBy 0 ((palindrome) . (fast 2) . (|- n 24)) $ fast 2 $ s "[303]" <| note mel |+ note "{[0,12] [12,24,36]}%5" # n (range 0 28 $ slow 32 $ tri) # puvol 0 # mcut (range 200 8000 $ slow 8.1 $ tri) 
+        # rel 8 # hpf (range 200 400 $ slow 7 $ sine) 
+        # lpf (range 200 8000 $ slow 8 $ sine) # mres 2 # resonance 0.3
+        # room 0.2 # size 0.9 # orbit 1
+    p "perc" $ stack [
+        s "707(4,4)" # gain 1.3,
+        s "707:6(4,8)",
+        s "[~ 707:3]*2"
+        ]
+    
 
-hush
-
-        
-        
-        
-        
-        
-        
-        
-        

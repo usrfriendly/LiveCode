@@ -39,13 +39,7 @@ t.clear;
 (
 t.schedAbs( t.nextBar,
 	{
-		~s1[0]=Pbind(\instrument,\dirt101,
-			\dur,0.5,
-			\scale,Scale.minor,
-			\degree,Pseq([0,3,5],inf)+Pseq([0,1,2,3],inf),
-			\puvol,1,
-			\sawvol,1,
-			\mcut,10000
+		~s1[0]=D
 		);
 		~s1[1]=\filterIn -> {|in| FreeVerb.ar(in,0.3,0.6,0.6)};
 		~s1.play;

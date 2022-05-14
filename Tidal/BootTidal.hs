@@ -75,6 +75,35 @@ let getState = streamGet tidal
     setB = streamSetB tidal
 :}
 
+:{
+let mcut = pF "mcut"
+    mres = pF "mres"
+    sawvol = pF "sawvol"
+    puvol = pF "puvol"
+    pwidth = pF "pwidth"
+    sinvol = pF "sinvol"
+    detvol = pF "detvol"
+    mratio = pF "mratio"
+    noisevol = pF "noisevol"
+:}
+
+:{    
+just2semi j = 12 * (log j) / (log 2)
+newscales = [
+      ("justionian",     map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 15/8]),
+      ("justdorian",     map just2semi [1,   9/8,   6/5,   4/3,   3/2,   5/3, 16/9]),
+      ("justphrygian",   map just2semi [1, 16/15,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlydian",     map just2semi [1,   9/8,   5/4, 45/32,   3/2,   5/3, 15/8]),
+      ("justmixolydian", map just2semi [1,   9/8,   5/4,   4/3,   3/2,   5/3, 16/9]),
+      ("justaeolian",    map just2semi [1,   9/8,   6/5,   4/3,   3/2,   8/5, 16/9]),
+      ("justlocrian",    map just2semi [1, 16/15,   6/5,   4/3,   45/32, 8/5, 16/9]),
+      ("edo5",          map just2semi [1, 8/7, 21/16, 3/2, 12/7]),
+      ("edo6",           map just2semi [1,   8/7,   5/4,    7/5,  8/5,   9/5]),
+      ("edo11",          map just2semi [1, 15/14, 8/7, 6/5, 9/7, 11/8, 16/11, 14/9, 5/3, 7/4, 15/8])
+    ]
+scale = getScale (scaleTable ++ newscales)
+:}
+
 :set prompt "tidal> "
 :set prompt-cont ""
 
