@@ -6,6 +6,9 @@ let mcut = pF "mcut"
     sinvol = pF "sinvol"
     detvol = pF "detvol"
     mratio = pF "mratio"
+    mratio2 = pF "mratio2"
+    mratio3 = pF "mratio3"
+    mratio4 = pF "mratio4"
     noisevol = pF "noisevol"
     
 -- cps 120/120 because for anything/120, anything=bpm
@@ -29,16 +32,16 @@ scale = getScale (scaleTable ++ newscales)
 do
     let inverse 1 = 0
         inverse 0 = 1
-        mel = scale "edo11" "{12 4 2 8 9 10 5 1 2}%16.1"
-    setcps (120/60/4)
-    d1 $ fast 2 $ note "{0 1 2 4 3 4}" |> s "moog" # n 1 # cut 1 # vowel "{o u i e}%2"
-        # room 0.2 # size 0.1
-    d3 $ s "[~ 909ho]*4" # hpf 10000 # room 0.2
+	setcps 1
+	d1 $ slow (irand(10)) $ scale "minor" "0 2 4 8" # s "dirtfm2" # mratio 2 # mratio2 (1/rand)*2 # mratio3 2 # mratio4 12 # sustain 4 # cut 1 # orbit 1 # room 0.2 # size 0.9 |+ n "{0.01,0.02}" |- n "16"
+	d2 $ stack [
+		fast (irand(2)) $ fast (irand(4)) $ s "808bd:8" # shape 0.9,
+		s "~ 808:3" # shape 0.9
+		] # room rand # orbit 2
+
 
 hush
 
-        
-        
         
         
         

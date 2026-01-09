@@ -30,7 +30,7 @@ s.reboot { // server options are only updated on reboot
 		~dirt.stop; // stop any old ones, avoid duplicate dirt (if it is nil, this won't do anything)
 		~dirt = SuperDirt(2, s); // two output channels, increase if you want to pan across more channels
 		~dirt.loadSoundFiles;   // load samples (path containing a wildcard can be passed in)
-		~dirt.loadSoundFiles("E:\\arinc\\Documents\\LiveCode\\Drums\\*");
+		~dirt.loadSoundFiles("/home/arin/Documents/LiveCode/Drums/*");
 		// for example: ~dirt.loadSoundFiles("/Users/myUserName/Dirt/samples/*");
 		// s.sync; // optionally: wait for samples to be read
 		~dirt.start(57120, 0 ! 12);   // start listening on port 57120, create two busses each sending audio to channel 0
@@ -118,7 +118,20 @@ s.reboot { // server options are only updated on reboot
 	~dirt.start(57120, 0 ! 12); // start superdirt, listening on port 57120, create two orbits each sending audio to channel 0
 
 })
-
+(
+	SynthDef.new(\dirtfm2, {
+	|out, freq=440, gate=0.5,sustain=1,gain=1,pan=0,release=1,attack=1, mratio=2, mratio2=4, mratio3=8, mratio4=(1/16)|
+		var env,sig,osc1,osc2,osc3,osc4;
+		env=EnvGen.ar(Env.perc(0.01,release,1,-4),1,1,0.01,timeScale:sustain,doneAction:2);
+		osc4 =  SinOsc.ar(freq,SinOsc.ar(freq/mratio4));
+		osc3 =  osc4*SinOsc.ar(freq,SinOsc.ar(freq/mratio3));
+	    osc2 =  osc3*SinOsc.ar(freq,SinOsc.ar(freq/mratio2));
+	    osc1 =  osc2*SinOsc.ar(freq,SinOsc.ar(freq/mratio));
+		sig = osc1*gain;
+		sig = sig*env;
+		OffsetOut.ar(out,DirtPan.ar(sig,~dirt.numChannels,pan,env));
+	}).add;
+)
 
 
 Quarks.gui
