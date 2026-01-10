@@ -5,7 +5,7 @@ let mcut = pF "mcut"
     pwidth = pF "pwidth"
     sinvol = pF "sinvol"
     detvol = pF "detvol"
-    mratio1 = pF "mratio"
+    mratio = pF "mratio"
     mratio2 = pF "mratio2"
     mratio3 = pF "mratio3"
     mratio4 = pF "mratio4"
@@ -29,22 +29,16 @@ newscales = [
     ]
 scale = getScale (scaleTable ++ newscales)
 
-myScale = scale "minor"
-
 do
     let inverse 1 = 0
         inverse 0 = 1
-	setcps (80/60/4)
-	d1 $ slow 8 $ stack [
-		myScale "{0 ~ ~ 0 ~}%8" # s "dirtfm2",
-		myScale "8*8",
-		myScale  "{[~ 3]/2 ~ ~ ~ ~}%8",
-		fast 8 $ myScale "{0 3 5}%4"
-		] # s "dirtfm2" # mratio1 (irand(2)) # mratio2 (irand(4)) # mratio3 (irand(8)) # mratio4 (irand(16)) # orbit 0 # room 0.2 # size 0.8 # rel 4 # attack 1 # sus 4
+	setcps (140/60/4)
+	d1 $ fast 4 $ slow (irand(10)) $ gain 1 # scale "minor" (irand(8)) # s "dirtfm2" # mratio 2 # mratio2 (1/rand)*2 # mratio3 (1/(irand(4))) # mratio4 (1/irand(12)) # sustain 4 # cut 1 # orbit 1 # room 0.2 # size 0.9 |+ n "{0.01,0.02}" |- n "16"
 	d2 $ stack [
-		fast 4 $ fast (choose[1,2,4]) $ s "808bd" # n (irand(8)) # room 0.2,
-		s "808:1*16" # gain (choose[0,1])
-		] # orbit 2
+		fast 4 $ fast (irand(2)) $ fast (irand(4)) $ s "808bd:8" # distort ((irand(999))/1000),
+		s "~ 808:3" # shape 0.911
+		] # room rand # orbit 2
+
 
 hush
 

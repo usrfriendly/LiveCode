@@ -73,10 +73,10 @@ s.reboot { // server options are only updated on reboot
 
 
 	SynthDef.new(\dirtfm, {
-		|out, freq=440, gate=0.5,sustain=1,gain=1,pan=0,release=1,attack=1, mratio=2, mratio2=4|
+		|out, freq=440, gate=0.5,sustain=1,gain=1,pan=0,release=1,attack=1, mratio1=2, mratio2=4|
 		var env,sig;
 		env=EnvGen.ar(Env.perc(0.01,release,1,-4),1,1,0.01,timeScale:sustain,doneAction:2);
-		sig =  SinOsc.ar(freq*SinOsc.ar(freq/mratio));
+		sig =  SinOsc.ar(freq*SinOsc.ar(freq/mratio1));
 		sig =  sig*SinOsc.ar(freq*SinOsc.ar(freq/mratio2));
 		sig = sig*gain;
 		sig = sig*env;
@@ -116,17 +116,19 @@ s.reboot { // server options are only updated on reboot
 	}).add;
 
 	~dirt.start(57120, 0 ! 12); // start superdirt, listening on port 57120, create two orbits each sending audio to channel 0
+	StageLimiter.activate;
 
 })
 (
 	SynthDef.new(\dirtfm2, {
-	|out, freq=440, gate=0.5,sustain=1,gain=1,pan=0,release=1,attack=1, mratio=2, mratio2=4, mratio3=8, mratio4=(1/16)|
-		var env,sig,osc1,osc2,osc3,osc4;
+	|out, freq=440, gate=0.5,sustain=1,gain=1,pan=0,release=1,attack=1, mratio1=2, mratio2=4, mratio3=8, mratio4=(1/16),accelerate,speed|
+		var env,sig,osc1,osc2,osc3,osc4,basefreq;
 		env=EnvGen.ar(Env.perc(0.01,release,1,-4),1,1,0.01,timeScale:sustain,doneAction:2);
-		osc4 =  SinOsc.ar(freq,SinOsc.ar(freq/mratio4));
-		osc3 =  osc4*SinOsc.ar(freq,SinOsc.ar(freq/mratio3));
-	    osc2 =  osc3*SinOsc.ar(freq,SinOsc.ar(freq/mratio2));
-	    osc1 =  osc2*SinOsc.ar(freq,SinOsc.ar(freq/mratio));
+		basefreq = freq*DirtFreqScale.kr(speed, accelerate, sustain);
+		osc4 =  SinOsc.ar(basefreq,SinOsc.ar(basefreq/mratio4));
+		osc3 =  osc4*SinOsc.ar(basefreq,SinOsc.ar(basefreq/mratio3));
+   	        osc2 =  osc3*SinOsc.ar(basefreq,SinOsc.ar(basefreq/mratio2));
+	        osc1 =  osc2*SinOsc.ar(basefreq,SinOsc.ar(basefreq/mratio1));
 		sig = osc1*gain;
 		sig = sig*env;
 		OffsetOut.ar(out,DirtPan.ar(sig,~dirt.numChannels,pan,env));
